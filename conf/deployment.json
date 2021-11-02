@@ -1,0 +1,46 @@
+{
+    "default": {
+        "jobs": [
+            {
+                "name": "cicd-databricks-sample",
+                "new_cluster": {
+                    "spark_version": "7.3.x-cpu-ml-scala2.12",
+                    "node_type_id": "Standard_F4s",
+                    "num_workers": 2
+                },
+                "libraries": [],
+                "email_notifications": {
+                    "on_start": [],
+                    "on_success": [],
+                    "on_failure": []
+                },
+                "max_retries": 0,
+                "spark_python_task": {
+                    "python_file": "cicd_databricks/jobs/sample/entrypoint.py",
+                    "parameters": [
+                        "--conf-file",
+                        "conf/test/sample.json"
+                    ]
+                }
+            },
+            {
+                "name": "cicd-databricks-sample-integration-test",
+                "new_cluster": {
+                    "spark_version": "7.3.x-cpu-ml-scala2.12",
+                    "node_type_id": "Standard_F4s",
+                    "num_workers": 1
+                },
+                "libraries": [],
+                "email_notifications": {
+                    "on_start": [],
+                    "on_success": [],
+                    "on_failure": []
+                },
+                "max_retries": 0,
+                "spark_python_task": {
+                    "python_file": "tests/integration/sample_test.py"
+                }
+            }
+        ]
+    }
+}
