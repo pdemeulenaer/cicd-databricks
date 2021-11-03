@@ -22,6 +22,9 @@ stages:
     steps:
     - script: env | sort
       displayName: 'Environment / Context'
+      env:
+        DATABRICKS_HOST: $(DATABRICKS_HOST)
+        DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)      
 
     - task: UsePythonVersion@0
       displayName: 'Use Python 3.7'
@@ -46,10 +49,16 @@ stages:
     - script: |
         dbx deploy --jobs=cicd-databricks-sample-integration-test --files-only
       displayName: 'Deploy integration test'
+      env:
+        DATABRICKS_HOST: $(DATABRICKS_HOST)
+        DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)
 
     - script: |
         dbx launch --job=cicd-databricks-sample-integration-test --as-run-submit --trace
       displayName: 'Launch integration on test'
+      env:
+        DATABRICKS_HOST: $(DATABRICKS_HOST)
+        DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)      
 
     - task: PublishTestResults@2
       condition: succeededOrFailed()
@@ -72,6 +81,9 @@ stages:
     steps:
       - script: env | sort
         displayName: 'Environment / Context'
+        env:
+          DATABRICKS_HOST: $(DATABRICKS_HOST)
+          DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)        
 
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.7'
@@ -96,6 +108,9 @@ stages:
       - script: |
           dbx deploy --jobs=cicd-databricks-sample
         displayName: 'Deploy the job'
+        env:
+          DATABRICKS_HOST: $(DATABRICKS_HOST)
+          DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)        
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
