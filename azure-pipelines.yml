@@ -20,11 +20,11 @@ stages:
       vmImage: 'ubuntu-18.04'
 
     steps:
-    # - script: env | sort
-    #   displayName: 'Environment / Context'
-    #   env:
-    #     DATABRICKS_HOST: $(DATABRICKS_HOST)
-    #     DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)      
+    - script: env | sort
+      displayName: 'Environment / Context'
+      env:
+        DATABRICKS_HOST: $(DATABRICKS_HOST)
+        DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)      
 
     - task: UsePythonVersion@0
       displayName: 'Use Python 3.7'
@@ -46,12 +46,12 @@ stages:
         pytest tests/unit --junitxml=test-unit.xml
       displayName: 'Run Unit tests'
 
-    # - script: |
-    #     dbx deploy --jobs=cicd-databricks-sample-integration-test --files-only
-    #   displayName: 'Deploy integration test'
-    #   env:
-    #     DATABRICKS_HOST: $(DATABRICKS_HOST)
-    #     DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)
+    - script: |
+        dbx deploy --jobs=cicd-databricks-sample-integration-test --files-only
+      displayName: 'Deploy integration test'
+      env:
+        DATABRICKS_HOST: $(DATABRICKS_HOST)
+        DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)
 
     # - script: |
     #     dbx launch --job=cicd-databricks-sample-integration-test --as-run-submit --trace
